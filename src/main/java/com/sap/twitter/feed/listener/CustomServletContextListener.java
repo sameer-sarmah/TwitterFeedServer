@@ -3,7 +3,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import com.sap.twitter.feed.search.TwitterSearchTags;
+import com.sap.twitter.feed.operations.TwitterSearchTags;
 @WebListener
 public class CustomServletContextListener
                implements ServletContextListener{
