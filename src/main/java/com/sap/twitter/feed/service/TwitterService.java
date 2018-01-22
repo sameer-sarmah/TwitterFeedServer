@@ -1,12 +1,24 @@
 package com.sap.twitter.feed.service;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.sap.twitter.feed.model.CreateStatus;
 import com.sap.twitter.feed.model.TweetModel;
+
+import twitter4j.Status;
 
 @Path("/tweets")
 public class TwitterService {
@@ -37,4 +49,19 @@ public class TwitterService {
 		return Response.status(200).entity(count.toString()).build();
 
 	}
+	
+	@POST
+	@Path("/tweet")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response createTweet(String json) {
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+		Type type = new TypeToken<CreateStatus>() {}.getType();
+		CreateStatus status=gson.fromJson(json, type);
+		String text=status.getText();
+		Long statusID = new TweetModel().createTweet(text);
+		return Response.status(200).entity(statusID.toString()).build();
+
+	}
+	
+
 }

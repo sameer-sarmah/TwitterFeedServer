@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sap.twitter.feed.cache.PositiveTweetCache;
+import com.sap.twitter.feed.operations.TwitterCreateStatus;
 
 import twitter4j.Status;
 
@@ -43,4 +44,8 @@ public class TweetModel {
 		List<Status> tweets=PositiveTweetCache.getTweets();
 		return tweets.size();
     } 
+    
+    public long createTweet(String text) {
+    	return TwitterCreateStatus.createStatus(text).getId();
+    }
 }

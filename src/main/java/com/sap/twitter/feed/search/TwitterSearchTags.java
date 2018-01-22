@@ -1,4 +1,4 @@
-package com.sap.twitter.feed.search;
+package com.sap.twitter.feed.operations;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -14,6 +14,7 @@ import com.sap.twitter.feed.cache.PositiveTweetCache;
 import com.sap.twitter.feed.comparators.ComparatorByTwitterFollower;
 import com.sap.twitter.feed.sentiment.SentimentAnalysor;
 import com.sap.twitter.feed.sentiment.SentimentType;
+import com.sap.twitter.feed.util.TwitterUtil;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -26,24 +27,8 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterSearchTags {
 
 	public static void searchTweeets(String searchTerm) {
-		final String consumerKey = "";//enter consumerKey of the account
-		final String consumerSecret = "";//enter consumerSecret of the account
-		final String accessToken = "";//enter accessToken of the account
-		final String accessTokenSecret = "";//enter accessTokenSecret of the account
 
-		// Set the system properties so that Twitter4j library used by twitter
-		// stream
-		// can use them to generat OAuth credentials
-		System.setProperty("twitter4j.oauth.consumerKey", consumerKey);
-		System.setProperty("twitter4j.oauth.consumerSecret", consumerSecret);
-		System.setProperty("twitter4j.oauth.accessToken", accessToken);
-		System.setProperty("twitter4j.oauth.accessTokenSecret", accessTokenSecret);
-		String[] credentials = { consumerKey, consumerSecret, accessToken, accessTokenSecret };
-		String[] filters = Arrays.copyOfRange(credentials, 4, credentials.length);
-		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey).setOAuthConsumerSecret(consumerSecret)
-				.setOAuthAccessToken(accessToken).setOAuthAccessTokenSecret(accessTokenSecret);
-		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
+		Twitter twitter =TwitterUtil.getTwitterHandle();
 		Query query = new Query(searchTerm);
 		int numberOfTweets = 190;
 		long lastID = Long.MAX_VALUE;
