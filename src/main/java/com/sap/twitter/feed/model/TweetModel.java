@@ -31,7 +31,7 @@ public class TweetModel {
 		}
 		//to index is greater than list size
 		else if(tweets.size()<toIndexExcluding) {
-			tweets=tweets.subList(fromIndexIncluding, tweets.size());
+			tweets=tweets.subList(fromIndexIncluding, tweets.size()-1);
 		}
 		tweets=tweets.subList(fromIndexIncluding, toIndexExcluding);
 		String json = gson.toJson(tweets, type);
