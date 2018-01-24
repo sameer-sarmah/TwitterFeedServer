@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sap.twitter.feed.cache.PositiveTweetCache;
 import com.sap.twitter.feed.operations.TwitterCreateStatus;
+import com.sap.twitter.feed.operations.TwitterDeleteStatus;
 
 import twitter4j.Status;
 
@@ -34,7 +35,10 @@ public class TweetModel {
 		else if(tweets.size()<toIndexExcluding) {
 			tweets=tweets.subList(fromIndexIncluding, tweets.size()-1);
 		}
-		tweets=tweets.subList(fromIndexIncluding, toIndexExcluding);
+		else {
+			tweets=tweets.subList(fromIndexIncluding, toIndexExcluding);		
+		}
+
 		String json = gson.toJson(tweets, type);
 		return json;
     }
@@ -47,5 +51,9 @@ public class TweetModel {
     
     public long createTweet(String text) {
     	return TwitterCreateStatus.createStatus(text).getId();
+    }
+    
+    public long deleteTweet(long statusId) {
+    	return TwitterDeleteStatus.deleteStatus(statusId).getId();
     }
 }

@@ -11,7 +11,11 @@ import twitter4j.StatusListener;
 
 public class CustomTweeterStatusListener implements StatusListener {
 
-	@Override
+	public void onException(Exception ex) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void onStatus(Status status) {
 		if(PositiveTweetCache.getTweets().size()<1000){
 			System.out.println("------------------------");
@@ -23,37 +27,38 @@ public class CustomTweeterStatusListener implements StatusListener {
 			if (status.getUser() != null && !status.getUser().getName().isEmpty()) {
 				System.out.println("User " + status.getUser().getName());
 			}
-			SentimentType type=SentimentAnalysor.analyse(status.getText());
-			if(type.equals(SentimentType.POSITIVE)){
-				System.out.println("Tweet added in StatusListener");
-				PositiveTweetCache.addTweet(status);
-			}
+
+           if(status.getUser()!=null && status.getUser().getFollowersCount()>=0 && !status.getUser().getProfileImageURL().isEmpty()) {
+            	SentimentType type = SentimentAnalysor.analyse(status.getText());
+    			if (type.equals(SentimentType.POSITIVE)) {
+    				System.out.println("Tweet added in StatusListener");
+    				PositiveTweetCache.prependTweet(status);
+    			}
+            }
 		}
+	}
+
+	public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void onTrackLimitationNotice(int i) {
-		throw new UnsupportedOperationException("Not supported yet.");
+	public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Override
-	public void onScrubGeo(long l, long l1) {
-		throw new UnsupportedOperationException("Not supported yet.");
+	public void onScrubGeo(long userId, long upToStatusId) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Override
-	public void onException(Exception ex) {
-
+	public void onStallWarning(StallWarning warning) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Override
-	public void onDeletionNotice(StatusDeletionNotice arg0) {
 
-	}
 
-	@Override
-	public void onStallWarning(StallWarning arg0) {
 
-	}
 }

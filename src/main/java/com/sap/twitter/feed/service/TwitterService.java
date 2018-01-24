@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -34,7 +35,7 @@ public class TwitterService {
 	@GET
 	@Path("/sublist")
 	@Produces({ "application/json" })
-	public Response getUsers(@QueryParam("from") int from, @QueryParam("to") int to) {
+	public Response getTweetsSubList(@QueryParam("from") int from, @QueryParam("to") int to) {
 
 		String jsonString = new TweetModel().find(from, to + 1);
 		return Response.status(200).entity(jsonString).build();
@@ -59,9 +60,17 @@ public class TwitterService {
 		CreateStatus status=gson.fromJson(json, type);
 		String text=status.getText();
 		Long statusID = new TweetModel().createTweet(text);
-		return Response.status(200).entity(statusID.toString()).build();
+		return Response.status(201).entity(statusID.toString()).build();
 
 	}
 	
+	@DELETE
+	@Path("/tweet/{statusId}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response createTweet(long statusId) {
+		Long statusID = new TweetModel().deleteTweet(statusId);
+		return Response.status(204).entity(statusID.toString()).build();
+
+	}
 
 }

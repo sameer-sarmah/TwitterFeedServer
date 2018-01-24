@@ -94,7 +94,7 @@ public class TwitterSearchTags {
 		}.getType();
 		String json = gson.toJson(tweets, type);
 		System.out.println(json);
-		// TwitterSearchTagsStream.searchTweetsAsStream(searchTerm);
+	    TwitterSearchTagsStream.searchTweetsAsStream(searchTerm);
 	}
 
 }

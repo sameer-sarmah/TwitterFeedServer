@@ -1,4 +1,4 @@
-package com.sap.twitter.feed.search;
+package com.sap.twitter.feed.operations;
 
 import com.sap.twitter.feed.listener.CustomTweeterStatusListener;
 

@@ -25,4 +25,10 @@ public static void addTweet(Status status) {
 	 lock.unlock();
 }
 
+public static void prependTweet(Status status) {
+	 lock.lock();
+	 tweets.add(0,status);
+	 lock.unlock();
+}
+
 }
